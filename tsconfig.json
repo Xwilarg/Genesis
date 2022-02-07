@@ -1,0 +1,11 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "noEmitOnError": true,
+        "strictNullChecks": true,
+        "removeComments": true,
+        "target": "es6",
+        "moduleResolution": "node"
+    }
+}

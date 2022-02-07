@@ -5,6 +5,7 @@
         <title>Genesis</title>
         <link rel="stylesheet" href="css/index.css"/>
         <link rel="stylesheet" href="css/tabs.css"/>
+        <script src="js/tabs.js"></script>
     </head>
     <body>
         <div id="header">
@@ -13,11 +14,12 @@
 
         <!-- TABS -->
         <div id="menu">
-            <button class="tab-elem">One</button>
-            <button class="tab-elem">Two</button>
+            <button class="tab-elem" id="one">One</button>
+            <button class="tab-elem" id="two">Two</button>
         </div>
         <div id="content">
-
+            <span id="content-one">One</span>
+            <span id="content-two" hidden>Two</span>
         </div>
     </body>
 </html>

@@ -1,0 +1,25 @@
+{
+  "name": "genesis",
+  "version": "1.0.0",
+  "description": "Making a video game? A book? Keep track of your world and characters",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xwilarg/Genesis.git"
+  },
+  "author": "Xwilarg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Xwilarg/Genesis/issues"
+  },
+  "homepage": "https://github.com/Xwilarg/Genesis#readme",
+  "devDependencies": {
+    "ts-loader": "^9.2.5",
+    "typescript": "^4.4.2",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
+  }
+}
