@@ -15,6 +15,6 @@ html {
     background-color: #333;
 }
 
-#menu {
+.tab-menu {
     margin-top: 7em; /* Add space because of header */
 }

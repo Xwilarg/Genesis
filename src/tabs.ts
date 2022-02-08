@@ -6,9 +6,9 @@ window.addEventListener('load', () => {
                 let isCurrent = elem.id === elem2.id;
                 document.getElementById(`content-${elem2.id}`)!.hidden = !isCurrent;
                 if (isCurrent) {
-                    document.getElementById(elem2.id)!.classList.add("current");
+                    document.getElementById(elem2.id)!.classList.add("tab-current");
                 } else {
-                    document.getElementById(elem2.id)!.classList.remove("current");
+                    document.getElementById(elem2.id)!.classList.remove("tab-current");
                 }
             });
         })

@@ -1,11 +1,11 @@
-#menu {
+.tab-menu {
     display: flex;
     background-color: darkgray;
     margin-left: 1em;
     margin-right: 1em;
 }
 
-#content {
+.tab-content {
     min-height: 20em;
     background-color: rgb(80, 80, 80);
     margin-left: 1em;
@@ -26,6 +26,6 @@
     background-color: rgb(140, 140, 140);
 }
 
-.tab-elem.current {
+.tab-elem.tab-current {
     background-color: rgb(120, 120, 120);
 }
