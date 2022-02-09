@@ -3,10 +3,15 @@
     <head>
         <meta charset="utf-8"/>
         <title>Genesis</title>
+
+        <!-- CSS -->
         <link rel="stylesheet" href="css/index.css"/>
         <link rel="stylesheet" href="css/tabs.css"/>
         <link rel="stylesheet" href="css/components.css"/>
-        <script src="js/tabs.js"></script> <!-- Tab loader -->
+        <link rel="stylesheet" href="css/filter.css"/>
+
+        <!-- JS -->
+        <script src="js/tabs.js"></script> <!-- Tab system -->
         <script src="js/saveload.js"></script> <!-- Save and load management -->
         <script src="js/loader.js"></script> <!-- Preload tab content -->
     </head>
@@ -25,7 +30,12 @@
             <button class="tab-elem" id="tab-two">Two</button>
         </div>
         <div class="tab-content">
-            <span id="content-tab-characters"></span>
+            <span id="content-tab-characters">
+                <div id="filter-characters"></div>
+                <hr/>
+                <div id="content-characters" hidden>
+                </div>
+            </span>
             <span id="content-tab-two" hidden>Two</span>
         </div>
 

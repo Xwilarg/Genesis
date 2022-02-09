@@ -11,6 +11,6 @@ window.addEventListener('load', () => {
                     document.getElementById(elem2.id)!.classList.remove("tab-current");
                 }
             });
-        })
+        });
     });
 });

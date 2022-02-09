@@ -24,17 +24,17 @@ html {
     right: .2em;
 }
 
-button {
+#right > button {
     background-color: rgb(197, 197, 197);
     border: none;
     padding: 1em;
     border-radius: 5px;
 }
 
-button:hover {
+#right > button:hover {
     background-color: rgb(140, 140, 140);
 }
 
-button:active {
+#right > button:active {
     background-color: rgb(120, 120, 120);
 }

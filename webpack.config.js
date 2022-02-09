@@ -14,7 +14,8 @@ module.exports = {
     entry: {
         tabs: './src/tabs.ts',
         saveload: './src/saveload.ts',
-        loader: './src/loader.ts'
+        loader: './src/loader.ts',
+        filter: './src/filter.ts'
     },
     resolve: {
         extensions: ['.ts'],
