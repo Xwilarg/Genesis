@@ -33,6 +33,8 @@ function getUniqueId(parentId: string, id: string) : string{
 function newElem(id: string) {
     current[id] = new NamedData(getUniqueId(id, "unnamed"), "Unnamed", {});
     templateData[id].push(current[id]!);
+    updateFilter(`filter-${id}`, templateData[id], () => { newElem(id); });
+    document.getElementById(`content-${id}`)!.hidden = false;
 }
 
 // Load template data and display in the website
@@ -44,13 +46,6 @@ function load(id: string, data: { [name: string]: Array<Field> }) {
 
     // Preload filter component
     preloadFilter(`filter-${id}`, () => { newElem(id); });
-
-    // When clicking the "+", unhide main content
-    document.getElementById(`filter-${id}`)!.addEventListener("click", () => {
-        current = {};
-        updateFilter(`filter-${id}`, templateData[id], () => { newElem(id); });
-        document.getElementById(`content-${id}`)!.hidden = false;
-    });
 
     // Display template content
     document.getElementById(`content-${id}`)!.innerHTML = Object.entries(data)

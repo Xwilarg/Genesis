@@ -2,7 +2,7 @@ import NamedData from "./data/nameddata";
 
 function preloadFilter(id: string, onNew: () => void) {
     document.getElementById(id)!.innerHTML = `<button id="new-${id}">+</button>`;
-    document.getElementById(`new-${id}`)?.addEventListener("click", onNew);
+    document.getElementById(`new-${id}`)!.addEventListener("click", onNew);
 }
 
 function updateFilter(id: string, data: Array<NamedData>, onNew: () => void) {
