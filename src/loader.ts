@@ -27,7 +27,6 @@ function getUniqueId(parentId: string, id: string) : string{
 
 // Create a new element
 function newElem(id: string) {
-    console.log("data");
     current[id] = new NamedData(getUniqueId(id, "unnamed"), "Unnamed", {});
     templateData[id].push(current[id]!);
 }
