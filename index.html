@@ -5,8 +5,10 @@
         <title>Genesis</title>
         <link rel="stylesheet" href="css/index.css"/>
         <link rel="stylesheet" href="css/tabs.css"/>
-        <script src="js/tabs.js"></script>
-        <script src="js/saveload.js"></script>
+        <link rel="stylesheet" href="css/components.css"/>
+        <script src="js/tabs.js"></script> <!-- Tab loader -->
+        <script src="js/saveload.js"></script> <!-- Save and load management -->
+        <script src="js/loader.js"></script> <!-- Preload tab content -->
     </head>
     <body>
         <div id="header">
@@ -19,11 +21,11 @@
 
         <!-- TABS -->
         <div class="tab-menu">
-            <button class="tab-elem tab-current" id="tab-one">One</button>
+            <button class="tab-elem tab-current" id="tab-characters">Characters</button>
             <button class="tab-elem" id="tab-two">Two</button>
         </div>
         <div class="tab-content">
-            <span id="content-tab-one">One</span>
+            <span id="content-tab-characters"></span>
             <span id="content-tab-two" hidden>Two</span>
         </div>
 

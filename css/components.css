@@ -1,0 +1,7 @@
+.tab-content input[type=text] {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: .3em;
+    outline: none;
+}

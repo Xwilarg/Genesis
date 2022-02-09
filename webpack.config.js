@@ -13,7 +13,8 @@ module.exports = {
     },
     entry: {
         tabs: './src/tabs.ts',
-        saveload: './src/saveload.ts'
+        saveload: './src/saveload.ts',
+        loader: './src/loader.ts'
     },
     resolve: {
         extensions: ['.ts'],
