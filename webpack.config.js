@@ -12,7 +12,8 @@ module.exports = {
         ]
     },
     entry: {
-        tabs: './src/tabs.ts'
+        tabs: './src/tabs.ts',
+        saveload: './src/saveload.ts'
     },
     resolve: {
         extensions: ['.ts'],

@@ -6,10 +6,15 @@
         <link rel="stylesheet" href="css/index.css"/>
         <link rel="stylesheet" href="css/tabs.css"/>
         <script src="js/tabs.js"></script>
+        <script src="js/saveload.js"></script>
     </head>
     <body>
         <div id="header">
             Genesis
+            <span id="right">
+                <button id="save">Save</button>
+                <button id="upload">Upload</button>
+            </span>
         </div>
 
         <!-- TABS -->
@@ -21,5 +26,8 @@
             <span id="content-tab-one">One</span>
             <span id="content-tab-two" hidden>Two</span>
         </div>
+
+        <!-- IMPORT -->
+        <input type="file" id="uploadInternal" accept="application/json" hidden/>
     </body>
 </html>

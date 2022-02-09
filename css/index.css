@@ -18,3 +18,23 @@ html {
 .tab-menu {
     margin-top: 7em; /* Add space because of header */
 }
+
+#right {
+    position: inherit;
+    right: .2em;
+}
+
+button {
+    background-color: rgb(197, 197, 197);
+    border: none;
+    padding: 1em;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: rgb(140, 140, 140);
+}
+
+button:active {
+    background-color: rgb(120, 120, 120);
+}
