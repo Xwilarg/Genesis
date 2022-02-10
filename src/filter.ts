@@ -7,11 +7,12 @@ function preloadFilter(id: string, onNew: () => void) {
 
 function updateFilter(id: string, data: Array<NamedData>, onNew: () => void) {
     preloadFilter(id, onNew);
-    document.getElementById(id)!.innerHTML +=
-        data.map(x => {
-            return `<button id="load-${x.id}">${x.name}</button>`;
-        })
-        .join(" ");
+    for (let x of data) {
+        var button = document.createElement("button");
+        button.id = `load-${x.id}`;
+        button.innerHTML = x.name;
+        document.getElementById(id)!.append(button);
+    }
 }
 
 export { preloadFilter, updateFilter }
