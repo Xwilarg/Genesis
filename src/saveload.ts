@@ -1,5 +1,17 @@
-function save() {
+import { preload } from "./loader";
+import { characterTemplate } from "./template/impl/character";
 
+function save() {
+    const filename = "data.json";
+    let content = JSON.stringify(characterTemplate);
+
+    let file = document.createElement('a');
+    file.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+    file.setAttribute('download', filename);
+    file.style.display = 'none';
+    document.body.appendChild(file);
+    file.click();
+    document.body.removeChild(file);
 }
 
 function upload() {
@@ -28,4 +40,5 @@ window.addEventListener('load', () => {
             save();
         }
     });
+    preload("characters", characterTemplate);
 });

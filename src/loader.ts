@@ -2,7 +2,6 @@ import NamedData from "./data/nameddata";
 import { preloadFilter, updateFilter } from "./filter";
 import Field from "./template/field";
 import { FieldType } from "./template/fieldtype";
-import { characterTemplate } from "./template/impl/character";
 
 // All data
 let templateData: { [id: string]: Array<NamedData> } = {};
@@ -40,7 +39,7 @@ function newElem(id: string) {
 // Load template data and display in the website
 // id: element in the HTML to write in
 // data: template data to be loaded
-function load(id: string, data: { [name: string]: Array<Field> }) {
+function preload(id: string, data: { [name: string]: Array<Field> }) {
     templateData[id] = [];
     current[id] = null;
 
@@ -65,6 +64,5 @@ function load(id: string, data: { [name: string]: Array<Field> }) {
         .join("<br/>");
 }
 
-window.addEventListener('load', () => {
-    load("characters", characterTemplate);
-});
+
+export { preload }
