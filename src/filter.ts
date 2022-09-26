@@ -10,7 +10,7 @@ function updateFilter(id: string, data: Array<NamedData>, onNew: () => void) {
     for (let x of data) {
         var button = document.createElement("button");
         button.id = `load-${id}-${x.id}`;
-        button.innerHTML = x.name;
+        button.innerHTML = "" + x.id;
         document.getElementById(id)!.append(button);
     }
 }

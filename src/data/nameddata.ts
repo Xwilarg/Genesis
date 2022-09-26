@@ -1,11 +1,9 @@
 export default class NamedData {
-    constructor(id: string, name: string, data: any) {
+    constructor(id: number, data: Record<string, string>) {
         this.id = id;
-        this.name = name;
         this.data = data;
     }
 
-    id: string;
-    name: string;
-    data: any;
+    id: number;
+    data: Record<string, string>;
 }

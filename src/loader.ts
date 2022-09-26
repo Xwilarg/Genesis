@@ -6,25 +6,17 @@ import { FieldType } from "./template/FieldType";
 // All data
 let templateData: { [id: string]: Array<NamedData> } = {};
 // Data currently being edited
-let current: { [id: string]: NamedData | null } = {};
+let current: NamedData | null = null;
 
 // Ensure the id given in parameter is unique
 // parentId: id of the parent element
 // id: id that need to be unique
-function getUniqueId(parentId: string, id: string) : string{
-    function getId(id: string, index: number) {
-        if (index === 1) {
-            return id;
-        } else {
-            return `${id}-${index}`;
-        }
-    }
-
+function getUniqueId(parentId: string) : number {
     let index = 1;
-    while (templateData[parentId].some(x => x.id === getId(id, index))) {
+    while (templateData[parentId].some(x => x.id === index)) {
         index++;
     }
-    return getId(id, index);
+    return index;
 }
 
 function addNewAndClean(data: ATemplate) {
@@ -35,8 +27,8 @@ function addNewAndClean(data: ATemplate) {
 // Create a new element
 // id: id of the parent element
 function newElem(id: string, data: ATemplate) {
-    current[id] = new NamedData(getUniqueId(id, "unnamed"), "Unnamed", {});
-    templateData[id].push(current[id]!);
+    current = new NamedData(getUniqueId(id), {});
+    templateData[id].push(current!);
     updateFilter(`filter-${id}`, templateData[id], () =>
     {
         addNewAndClean(data);
@@ -50,7 +42,7 @@ function newElem(id: string, data: ATemplate) {
 function preload(data: ATemplate) {
     const id = data.getName();
     templateData[id] = [];
-    current[id] = null;
+    current = null;
 
     // Preload filter component
     preloadFilter(`filter-${id}`, () =>
@@ -66,10 +58,13 @@ function updateContent(data: ATemplate) {
     document.getElementById(`content-${data.getName()}`)!.innerHTML = Object.entries(data.getContent())
         .map(([_, value]) => {
             return value.map(field => {
-
+                const id = `${data.getName()}-${field.id}`;
+                const value = current !== null && field.id in current.data
+                    ? current.data[field.id]
+                    : "";
                 switch (field.type) {
                     case FieldType.String:
-                        return `${field.name}: <input type="text" name="${field.id}"/>`;
+                        return `${field.name}: <input type="text" id="${id}" value="${value}"/>`;
 
                     default:
                         throw `Unhandled field type ${field.type}`
@@ -78,6 +73,18 @@ function updateContent(data: ATemplate) {
             }).join("<br/>");
         })
         .join("<br/>");
+
+    // Add change listeners to all fields
+    if (current  !== null) {
+        for (const [_, value] of Object.entries(data.getContent())) {
+            for (const field of value) {
+                const id = `${data.getName()}-${field.id}`;
+                document.getElementById(id)!.addEventListener('change', (e: any) => {
+                    current!.data[field.id] = e.target.value;
+                });
+            }
+        }
+    }
 }
 
 
