@@ -14,4 +14,8 @@ export default class Character implements ATemplate
     getName(): string {
         return "character";
     }
+
+    formatName(format: (name: string) => string): string {
+        return format("first-name") + " " + format("last-name");
+    }
 }

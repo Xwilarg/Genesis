@@ -56,7 +56,7 @@ function newElem(data: ATemplate) {
 
 function readyFilter(data: ATemplate): Array<HTMLButtonElement> {
     const id = data.getName();
-    var buttons = updateFilter(`filter-${id}`, templateData[id], () =>
+    var buttons = updateFilter(data, `filter-${id}`, templateData[id], () =>
     {
         addNewAndClean(data);
     }, (elemId: number) => {
