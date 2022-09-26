@@ -29,11 +29,12 @@ function addNewAndClean(data: ATemplate) {
 function newElem(id: string, data: ATemplate) {
     current = new NamedData(getUniqueId(id), {});
     templateData[id].push(current!);
-    updateFilter(`filter-${id}`, templateData[id], () =>
+    var buttons = updateFilter(`filter-${id}`, templateData[id], () =>
     {
         addNewAndClean(data);
     });
     document.getElementById(`content-${id}`)!.hidden = false;
+    buttons[buttons.length - 1].classList.add("tab-current");
 }
 
 // Load template data and display in the website
