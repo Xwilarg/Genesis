@@ -20,18 +20,22 @@ function getUniqueId(parentId: string) : number {
 }
 
 function addNewAndClean(data: ATemplate) {
-    newElem(data.getName(), data);
+    newElem(data);
     updateContent(data);
 }
 
 // Create a new element
 // id: id of the parent element
-function newElem(id: string, data: ATemplate) {
+function newElem(data: ATemplate) {
+    const id = data.getName();
     current = new NamedData(getUniqueId(id), {});
     templateData[id].push(current!);
     var buttons = updateFilter(`filter-${id}`, templateData[id], () =>
     {
         addNewAndClean(data);
+    }, (elemId: number) => {
+        current = templateData[id].find(x => x.id == elemId)!;
+        updateContent(data);
     });
     document.getElementById(`content-${id}`)!.hidden = false;
     buttons[buttons.length - 1].classList.add("tab-current");
