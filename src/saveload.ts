@@ -1,6 +1,8 @@
 import { preload } from "./loader";
 import Character from "./template/impl/Character";
 
+const modules = [ new Character() ];
+
 function save() {
     const filename = "data.json";
     let content = JSON.stringify(modules);
@@ -41,8 +43,18 @@ window.addEventListener('load', () => {
         }
     });
     for (const mod of modules) {
+        const name = mod.getName();
+        document.getElementById("main-menu")!.innerHTML += `
+            <button class="tab-elem tab-current" id="tab-${name}">${name}</button>
+        `;
+        document.getElementById("main-content")!.innerHTML += `
+            <span id="content-tab-${name}">
+                <div id="filter-${name}"></div>
+                <hr/>
+                <div id="content-${name}" hidden>
+                </div>
+            </span>
+        `;
         preload(mod.getName(), mod.getContent());
     }
 });
-
-const modules = [ new Character() ];
