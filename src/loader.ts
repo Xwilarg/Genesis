@@ -19,6 +19,7 @@ function setData(data: { [id: string]: Array<NamedData> }, defaultTemplate: ATem
     updateDisplay(defaultTemplate);
 }
 
+// Refresh the whole display
 function updateDisplay(template: ATemplate) {
     const elemCount = Object.keys(templateData).length;
     if (elemCount > 0)
@@ -59,6 +60,7 @@ function newElem(data: ATemplate) {
     buttons[buttons.length - 1].classList.add("tab-current");
 }
 
+// Update the filters
 function readyFilter(data: ATemplate): Array<HTMLButtonElement> {
     const id = data.getName();
     var buttons = updateFilter(data, `filter-${id}`, templateData[id], () =>
@@ -89,6 +91,7 @@ function preload(data: ATemplate) {
     updateContent(data);
 }
 
+// Update the main content of the page
 function updateContent(data: ATemplate) {
     // Display template content
     const mainTarget = document.getElementById(`content-${data.getName()}`)!;
@@ -125,6 +128,7 @@ function updateContent(data: ATemplate) {
         }
     }
 
+    // Add "delete" button
     if (current !== null) {
         var div = document.createElement("div");
         div.classList.add("settings");
