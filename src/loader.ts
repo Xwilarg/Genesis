@@ -107,17 +107,24 @@ function updateContent(data: ATemplate) {
                     const value = field.id in current!.data
                         ? current!.data[field.id]
                         : "";
+                    const label = field.name === "" ? "" : (field.name + ": ");
+                    let html = "<div>";
                     switch (field.type) {
                         case FieldType.String:
-                            return `${field.name}: <input type="text" id="${id}" value="${value}"/>`;
+                            html += `${label} <input type="text" id="${id}" value="${value}" placeholder="${field.watermark}"/>`;
+                            break;
 
                         default:
                             throw `Unhandled field type ${field.type}`
                     }
-
-                }).join("<br/>");
+                    html += "</div>";
+                    if (!field.isInline) { // Force break if field isn't inline
+                        html += "<div class='flex-break'></div>";
+                    }
+                    return html;
+                }).join("");
             })
-            .join("<br/>");
+            .join("");
 
         // Add change listeners to all fields
         for (const [_, value] of Object.entries(data.getContent())) {

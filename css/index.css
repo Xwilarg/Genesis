@@ -43,3 +43,16 @@ html {
     position: absolute;
     right: 2em;
 }
+
+.flex {
+    display: flex;
+    flex-flow: wrap;
+}
+
+.flex > div {
+    padding: .2em;
+}
+
+.flex-break {
+    width: 100%;
+}

@@ -51,7 +51,7 @@ window.addEventListener('load', () => {
             <span id="content-tab-${name}">
                 <div id="filter-${name}"></div>
                 <hr/>
-                <div id="content-${name}" hidden>
+                <div id="content-${name}" class="flex" hidden>
                 </div>
             </span>
         `;

@@ -7,7 +7,8 @@ export default class Character implements ATemplate
 {
     getContent(): Record<string, Field[]>{
         return { "introduction": [
-            new Field("first-name", "First Name", FieldType.String)
+            new Field("first-name", "Name", FieldType.String, "First Name", true),
+            new Field("last-name", "", FieldType.String, "Last Name")
         ]};
     }
 
