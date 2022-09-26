@@ -1,10 +1,16 @@
-import Field from "../field";
-import { FieldType } from "../fieldtype";
+import ATemplate from "../ATemplate";
+import Field from "../Field";
+import { FieldType } from "../FieldType";
 
-const characterTemplate = {
-    "introduction": [
-        new Field("first-name", "First Name", FieldType.String)
-    ]
-};
+export default class Character implements ATemplate
+{
+    getContent(): Record<string, Field[]>{
+        return { "introduction": [
+            new Field("first-name", "First Name", FieldType.String)
+        ]};
+    }
 
-export { characterTemplate }
+    getName(): string {
+        return "character";
+    }
+}

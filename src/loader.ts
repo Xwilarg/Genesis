@@ -1,7 +1,7 @@
-import NamedData from "./data/nameddata";
+import NamedData from "./data/NamedData";
 import { preloadFilter, updateFilter } from "./filter";
-import Field from "./template/field";
-import { FieldType } from "./template/fieldtype";
+import Field from "./template/Field";
+import { FieldType } from "./template/FieldType";
 
 // All data
 let templateData: { [id: string]: Array<NamedData> } = {};

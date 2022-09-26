@@ -1,4 +1,4 @@
-import NamedData from "./data/nameddata";
+import NamedData from "./data/NamedData";
 
 function preloadFilter(id: string, onNew: () => void) {
     document.getElementById(id)!.innerHTML = `<button id="new-${id}">+</button>`;

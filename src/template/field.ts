@@ -1,4 +1,4 @@
-import { FieldType } from "./fieldtype";
+import { FieldType } from "./FieldType";
 
 export default class Field {
     constructor(id: string, name: string, type: FieldType) {

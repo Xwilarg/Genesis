@@ -1,9 +1,9 @@
 import { preload } from "./loader";
-import { characterTemplate } from "./template/impl/character";
+import Character from "./template/impl/Character";
 
 function save() {
     const filename = "data.json";
-    let content = JSON.stringify(characterTemplate);
+    let content = JSON.stringify(modules);
 
     let file = document.createElement('a');
     file.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
@@ -40,5 +40,9 @@ window.addEventListener('load', () => {
             save();
         }
     });
-    preload("characters", characterTemplate);
+    for (const mod of modules) {
+        preload(mod.getName(), mod.getContent());
+    }
 });
+
+const modules = [ new Character() ];
