@@ -5,15 +5,18 @@ function preloadFilter(id: string, onNew: () => void) {
     document.getElementById(`new-${id}`)!.addEventListener("click", onNew);
 }
 
+// Update the display of the filter at the top
 function updateFilter(id: string, data: Array<NamedData>, onNew: () => void, onClick: (id: number) => void): Array<HTMLButtonElement> {
     let buttons = [];
 
     preloadFilter(id, onNew);
+
     for (let x of data) {
         var button = document.createElement("button");
         button.innerHTML = "" + x.id;
         button.classList.add("tab-elem");
         button.addEventListener("click", (e: any) => {
+            // When we click a button, we update the tab currently selected and call onClick
             for (const elem of document.getElementById(id)!.getElementsByClassName("tab-current")) {
                 elem.classList.remove("tab-current");
             }

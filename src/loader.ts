@@ -8,6 +8,26 @@ let templateData: { [id: string]: Array<NamedData> } = {};
 // Data currently being edited
 let current: NamedData | null = null;
 
+function getData(): { [id: string]: Array<NamedData> }
+{
+    return templateData;
+}
+
+function setData(data: { [id: string]: Array<NamedData> }, defaultTemplate: ATemplate)
+{
+    templateData = data;
+    const elemCount = Object.keys(templateData).length;
+    if (elemCount > 0)
+    {
+        current = templateData[defaultTemplate.getName()][0];
+    }
+    const buttons = readyFilter(defaultTemplate);
+    updateContent(defaultTemplate);
+    if (elemCount > 0) {
+        buttons[0].classList.add("tab-current");
+    }
+}
+
 // Ensure the id given in parameter is unique
 // parentId: id of the parent element
 // id: id that need to be unique
@@ -30,6 +50,12 @@ function newElem(data: ATemplate) {
     const id = data.getName();
     current = new NamedData(getUniqueId(id), {});
     templateData[id].push(current!);
+    const buttons = readyFilter(data);
+    buttons[buttons.length - 1].classList.add("tab-current");
+}
+
+function readyFilter(data: ATemplate): Array<HTMLButtonElement> {
+    const id = data.getName();
     var buttons = updateFilter(`filter-${id}`, templateData[id], () =>
     {
         addNewAndClean(data);
@@ -38,7 +64,7 @@ function newElem(data: ATemplate) {
         updateContent(data);
     });
     document.getElementById(`content-${id}`)!.hidden = false;
-    buttons[buttons.length - 1].classList.add("tab-current");
+    return buttons;
 }
 
 // Load template data and display in the website
@@ -93,4 +119,4 @@ function updateContent(data: ATemplate) {
 }
 
 
-export { preload }
+export { preload, getData, setData }

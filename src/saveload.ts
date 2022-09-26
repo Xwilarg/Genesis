@@ -1,14 +1,14 @@
-import { preload } from "./loader";
+import { preload, setData, getData } from "./loader";
 import Character from "./template/impl/Character";
 
 const modules = [ new Character() ];
 
 function save() {
     const filename = "data.json";
-    let content = JSON.stringify(modules);
+    let content = JSON.stringify(getData());
 
     let file = document.createElement('a');
-    file.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+    file.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(content));
     file.setAttribute('download', filename);
     file.style.display = 'none';
     document.body.appendChild(file);
@@ -20,8 +20,8 @@ function upload() {
     let file = (document.getElementById("uploadInternal") as HTMLInputElement).files![0]; // Get user file
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(val) {
-            console.log(val);
+        reader.onload = function(val: any) {
+            setData(JSON.parse(val.target.result), modules[0]);
         };
         reader.readAsText(file);
     }
