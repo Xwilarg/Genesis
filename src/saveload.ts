@@ -55,6 +55,6 @@ window.addEventListener('load', () => {
                 </div>
             </span>
         `;
-        preload(mod.getName(), mod.getContent());
+        preload(mod);
     }
 });
