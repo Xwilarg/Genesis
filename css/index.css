@@ -38,3 +38,8 @@ html {
 #right > button:active {
     background-color: rgb(120, 120, 120);
 }
+
+.settings {
+    position: absolute;
+    right: 2em;
+}

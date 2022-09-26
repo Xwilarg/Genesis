@@ -16,16 +16,21 @@ function getData(): { [id: string]: Array<NamedData> }
 function setData(data: { [id: string]: Array<NamedData> }, defaultTemplate: ATemplate)
 {
     templateData = data;
+    updateDisplay(defaultTemplate);
+}
+
+function updateDisplay(template: ATemplate) {
     const elemCount = Object.keys(templateData).length;
     if (elemCount > 0)
     {
-        current = templateData[defaultTemplate.getName()][0];
+        current = templateData[template.getName()][0];
     }
-    const buttons = readyFilter(defaultTemplate);
-    updateContent(defaultTemplate);
+    const buttons = readyFilter(template);
+    updateContent(template);
     if (elemCount > 0) {
         buttons[0].classList.add("tab-current");
     }
+
 }
 
 // Ensure the id given in parameter is unique
@@ -86,12 +91,15 @@ function preload(data: ATemplate) {
 
 function updateContent(data: ATemplate) {
     // Display template content
-    document.getElementById(`content-${data.getName()}`)!.innerHTML = Object.entries(data.getContent())
+    const mainTarget = document.getElementById(`content-${data.getName()}`)!;
+
+    mainTarget.innerHTML = current === null ? "" :
+        Object.entries(data.getContent())
         .map(([_, value]) => {
             return value.map(field => {
                 const id = `${data.getName()}-${field.id}`;
-                const value = current !== null && field.id in current.data
-                    ? current.data[field.id]
+                const value = field.id in current!.data
+                    ? current!.data[field.id]
                     : "";
                 switch (field.type) {
                     case FieldType.String:
@@ -106,7 +114,7 @@ function updateContent(data: ATemplate) {
         .join("<br/>");
 
     // Add change listeners to all fields
-    if (current  !== null) {
+    if (current !== null) {
         for (const [_, value] of Object.entries(data.getContent())) {
             for (const field of value) {
                 const id = `${data.getName()}-${field.id}`;
@@ -116,7 +124,21 @@ function updateContent(data: ATemplate) {
             }
         }
     }
+
+    if (current !== null) {
+        var div = document.createElement("div");
+        div.classList.add("settings");
+        var button = document.createElement("button");
+        button.innerHTML = "Delete";
+        button.addEventListener("click", (_: any) => {
+            templateData[data.getName()] = templateData[data.getName()].filter(x => x.id !== current!.id);
+            current = null;
+            updateDisplay(data);
+        });
+        div.append(button);
+        mainTarget.append(div);
+    }
 }
 
 
-export { preload, getData, setData }
+export { preload, getData, setData, updateDisplay }
