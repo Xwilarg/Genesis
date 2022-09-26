@@ -21,7 +21,7 @@ function setData(data: { [id: string]: Array<NamedData> }, defaultTemplate: ATem
 
 // Refresh the whole display
 function updateDisplay(template: ATemplate) {
-    const elemCount = Object.keys(templateData).length;
+    const elemCount = Object.keys(templateData[template.getName()]).length;
     if (elemCount > 0)
     {
         current = templateData[template.getName()][0];
@@ -96,28 +96,30 @@ function updateContent(data: ATemplate) {
     // Display template content
     const mainTarget = document.getElementById(`content-${data.getName()}`)!;
 
-    mainTarget.innerHTML = current === null ? "" :
-        Object.entries(data.getContent())
-        .map(([_, value]) => {
-            return value.map(field => {
-                const id = `${data.getName()}-${field.id}`;
-                const value = field.id in current!.data
-                    ? current!.data[field.id]
-                    : "";
-                switch (field.type) {
-                    case FieldType.String:
-                        return `${field.name}: <input type="text" id="${id}" value="${value}"/>`;
+    if (current === null) {
+        mainTarget.innerHTML = "";
+    } else {
+        mainTarget.innerHTML =
+            Object.entries(data.getContent())
+            .map(([_, value]) => {
+                return value.map(field => {
+                    const id = `${data.getName()}-${field.id}`;
+                    const value = field.id in current!.data
+                        ? current!.data[field.id]
+                        : "";
+                    switch (field.type) {
+                        case FieldType.String:
+                            return `${field.name}: <input type="text" id="${id}" value="${value}"/>`;
 
-                    default:
-                        throw `Unhandled field type ${field.type}`
-                }
+                        default:
+                            throw `Unhandled field type ${field.type}`
+                    }
 
-            }).join("<br/>");
-        })
-        .join("<br/>");
+                }).join("<br/>");
+            })
+            .join("<br/>");
 
-    // Add change listeners to all fields
-    if (current !== null) {
+        // Add change listeners to all fields
         for (const [_, value] of Object.entries(data.getContent())) {
             for (const field of value) {
                 const id = `${data.getName()}-${field.id}`;
@@ -126,10 +128,8 @@ function updateContent(data: ATemplate) {
                 });
             }
         }
-    }
 
-    // Add "delete" button
-    if (current !== null) {
+        // Add "delete" button
         var div = document.createElement("div");
         div.classList.add("settings");
         var button = document.createElement("button");
