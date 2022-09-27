@@ -141,6 +141,13 @@ function updateContent(data: ATemplate) {
                             throw `Unhandled field type ${field.type}`
                     }
                     html += "</div>";
+                    if (field.links.length > 0) {
+                        html += "<div>";
+                        for (const link of field.links) {
+                            html += `<a href="${link}" target="_blank">Helper</a>`;
+                        }
+                        html += "</div>";
+                    }
                     if (!field.isInline) { // Force break if field isn't inline
                         html += "<div class='flex-break'></div>";
                     }
