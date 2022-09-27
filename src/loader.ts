@@ -107,8 +107,9 @@ function updateContent(data: ATemplate) {
         document.getElementById("introduction")!.hidden = true;
         mainTarget.innerHTML =
             Object.entries(data.getContent())
-            .map(([_, value]) => {
-                return value.map(field => {
+            .map(([key, value]) => {
+                return `<h2>${key}</h2><div class='flex-break'></div>` +
+                    value.map(field => {
                     const id = `${data.getName()}-${field.id}`;
                     const value = field.id in current!.data
                         ? current!.data[field.id]
@@ -130,7 +131,7 @@ function updateContent(data: ATemplate) {
                     return html;
                 }).join("");
             })
-            .join("");
+            .join("<hr/>");
 
         var targetChangeFields: Array<string> = [];
         function filterRegister(data: string): string
