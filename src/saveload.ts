@@ -60,6 +60,8 @@ window.addEventListener('load', () => {
                 </div>
             </span>
         ` + document.getElementById("main-content")!.innerHTML;
+    }
+    for (const mod of modules) {
         preload(mod);
     }
 });
