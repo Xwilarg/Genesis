@@ -50,7 +50,7 @@ window.addEventListener('load', () => {
     for (const mod of modules) {
         const name = mod.getName();
         document.getElementById("main-menu")!.innerHTML += `
-            <button class="tab-elem" id="tab-${name}">${name}</button>
+            <button class="tab-elem cap-word" id="tab-${name}">${name}</button>
         `;
         document.getElementById("main-content")!.innerHTML = `
             <span id="content-tab-${name}" hidden>
