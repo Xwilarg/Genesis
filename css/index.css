@@ -24,18 +24,18 @@ html {
     right: .2em;
 }
 
-#right > button {
+button {
     background-color: rgb(197, 197, 197);
     border: none;
     padding: 1em;
     border-radius: 5px;
 }
 
-#right > button:hover {
+button:hover {
     background-color: rgb(140, 140, 140);
 }
 
-#right > button:active {
+button:active {
     background-color: rgb(120, 120, 120);
 }
 
@@ -55,4 +55,15 @@ html {
 
 .flex-break {
     width: 100%;
+}
+
+a:not(.button) {
+    text-decoration: none;
+    border-bottom: dotted 1px;
+    color: rgb(142, 149, 196);
+}
+
+a:not(.button):hover {
+    color: #EF6480;
+    border-bottom-color: transparent;
 }

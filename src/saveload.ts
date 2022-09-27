@@ -47,14 +47,14 @@ window.addEventListener('load', () => {
         document.getElementById("main-menu")!.innerHTML += `
             <button class="tab-elem tab-current" id="tab-${name}">${name}</button>
         `;
-        document.getElementById("main-content")!.innerHTML += `
+        document.getElementById("main-content")!.innerHTML = `
             <span id="content-tab-${name}">
                 <div id="filter-${name}"></div>
                 <hr/>
                 <div id="content-${name}" class="flex" hidden>
                 </div>
             </span>
-        `;
+        ` + document.getElementById("main-content")!.innerHTML;
         preload(mod);
     }
 });

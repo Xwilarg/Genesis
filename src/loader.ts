@@ -102,7 +102,9 @@ function updateContent(data: ATemplate) {
 
     if (current === null) {
         mainTarget.innerHTML = "";
+        document.getElementById("introduction")!.hidden = false;
     } else {
+        document.getElementById("introduction")!.hidden = true;
         mainTarget.innerHTML =
             Object.entries(data.getContent())
             .map(([_, value]) => {
