@@ -108,7 +108,7 @@ function updateContent(data: ATemplate) {
         mainTarget.innerHTML =
             Object.entries(data.getContent())
             .map(([key, value]) => {
-                return `<h2>${key}</h2><div class='flex-break'></div>` +
+                return `<h2 class="cap-word">${key}</h2><div class='flex-break'></div>` +
                     value.map(field => {
                     const id = `${data.getName()}-${field.id}`;
                     const value = field.id in current!.data

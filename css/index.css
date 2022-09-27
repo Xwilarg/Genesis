@@ -1,3 +1,4 @@
+/* Banner */
 #header {
     background-color: darkgray;
     position: fixed;
@@ -24,6 +25,7 @@ html {
     right: .2em;
 }
 
+/* Buttons */
 button {
     background-color: rgb(197, 197, 197);
     border: none;
@@ -39,10 +41,14 @@ button:active {
     background-color: rgb(120, 120, 120);
 }
 
+/* Settings are a small section in each tab that allow to manage it */
+
 .settings {
     position: absolute;
     right: 2em;
 }
+
+/* Flex stuffs */
 
 .flex {
     display: flex;
@@ -53,9 +59,11 @@ button:active {
     padding: .2em;
 }
 
-.flex-break {
+.flex-break { /* Force new line on flex */
     width: 100%;
 }
+
+/* Links */
 
 a:not(.button) {
     text-decoration: none;
@@ -66,4 +74,10 @@ a:not(.button) {
 a:not(.button):hover {
     color: #EF6480;
     border-bottom-color: transparent;
+}
+
+/* Used to capitalize a word */
+
+.cap-word:first-letter {
+    text-transform: capitalize;
 }

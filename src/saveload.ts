@@ -1,7 +1,8 @@
 import { preload, setData, getData } from "./loader";
 import Character from "./template/impl/Character";
+import Country from "./template/impl/Country";
 
-const modules = [ new Character() ];
+const modules = [ new Character(), new Country() ];
 
 function save() {
     const filename = "data.json";
@@ -45,10 +46,10 @@ window.addEventListener('load', () => {
     for (const mod of modules) {
         const name = mod.getName();
         document.getElementById("main-menu")!.innerHTML += `
-            <button class="tab-elem tab-current" id="tab-${name}">${name}</button>
+            <button class="tab-elem" id="tab-${name}">${name}</button>
         `;
         document.getElementById("main-content")!.innerHTML = `
-            <span id="content-tab-${name}">
+            <span id="content-tab-${name}" hidden>
                 <div id="filter-${name}"></div>
                 <hr/>
                 <div id="content-${name}" class="flex" hidden>
