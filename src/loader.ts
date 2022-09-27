@@ -17,9 +17,17 @@ function getData(): { [id: string]: Array<NamedData> }
     return templateData;
 }
 
+function resetData() {
+    templateData = {};
+}
+
 function setData(data: { [id: string]: Array<NamedData> }, defaultTemplate: ATemplate)
 {
-    templateData = data;
+    if (defaultTemplate.getName() in data) {
+        templateData[defaultTemplate.getName()] = data[defaultTemplate.getName()];
+    } else {
+        templateData[defaultTemplate.getName()] = [];
+    }
     updateDisplay(defaultTemplate);
 }
 
@@ -173,4 +181,4 @@ function updateContent(data: ATemplate) {
 }
 
 
-export { preload, getData, setData, updateDisplay }
+export { preload, getData, setData, resetData, updateDisplay }

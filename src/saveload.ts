@@ -1,4 +1,4 @@
-import { preload, setData, getData } from "./loader";
+import { preload, setData, getData, resetData } from "./loader";
 import Character from "./template/impl/Character";
 import Country from "./template/impl/Country";
 
@@ -22,7 +22,11 @@ function upload() {
     if (file) {
         const reader = new FileReader();
         reader.onload = function(val: any) {
-            setData(JSON.parse(val.target.result), modules[0]);
+            resetData();
+            const json = JSON.parse(val.target.result);
+            for (const mod of modules) {
+                setData(json, mod);
+            }
         };
         reader.readAsText(file);
     }
