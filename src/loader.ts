@@ -129,6 +129,10 @@ function updateContent(data: ATemplate) {
                             html += `${label} <input type="text" id="${id}" value="${value}" placeholder="${field.watermark}"/>`;
                             break;
 
+                        case FieldType.Text:
+                            html += `${label} <textarea id="${id}" value="${value}" placeholder="${field.watermark}"></textarea>`;
+                            break;
+
                         default:
                             throw `Unhandled field type ${field.type}`
                     }

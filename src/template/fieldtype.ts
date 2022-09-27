@@ -1,3 +1,4 @@
 export enum FieldType {
-    String
+    String,
+    Text
 }
