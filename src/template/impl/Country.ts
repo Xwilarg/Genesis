@@ -9,7 +9,8 @@ export default class Character implements ATemplate
         return {
             "general": [
             new Field("name", "Name", FieldType.String),
-            new Field("motto", "Motto", FieldType.String, "", false, [ "https://en.wikipedia.org/wiki/List_of_national_mottos" ])
+            new Field("motto", "Motto", FieldType.String, "", false, [ "https://en.wikipedia.org/wiki/List_of_national_mottos" ]),
+            new Field("capital", "Capital", FieldType.String),
         ], "governement": [
             new Field("type-governement", "Governement", FieldType.String, "Democracy? Monarchy? Oligarchy?", false, [ "https://en.wikipedia.org/wiki/List_of_forms_of_government" ]),
             new Field("separation-power", "Separation of powers", FieldType.Text, "How is the goverment splitted and ensure the leader doesn't have all powers?", false, [ "https://en.wikipedia.org/wiki/Separation_of_powers" ])

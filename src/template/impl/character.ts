@@ -13,7 +13,7 @@ export default class Character implements ATemplate
             new Field("aliases", "Aliases", FieldType.Text),
             new Field("height", "Height", FieldType.Number, "cm"),
             new Field("weight", "Weight", FieldType.Number, "kg"),
-            new Field("race", "Race", FieldType.String, "If fantasy settings, is he a human? an elf? a spirit?"),
+            new Field("species", "Species", FieldType.String, "Is he a human? an elf? a spirit?"),
             new Field("gender", "Gender", FieldType.String, "Is a male, a female or does identify as something else?"),
             new Field("sexuality", "Sexuality", FieldType.String, "Is he heterosexual, homosexual, Asexual...")
         ], "physical-appearance": [
@@ -35,6 +35,8 @@ export default class Character implements ATemplate
             new Field("be-extraversion", "Extraversion", FieldType.Text, "Does he like being the center of attention? Does he enjoy meeting new people?"),
             new Field("be-agreeableness", "Agreeableness", FieldType.Text, "Does he cares about others? Does he like helping?"),
             new Field("be-neuroticism", "Neuroticism", FieldType.Text, "Does he often feel upset or anxious? Does he swing mood easily?"),
+        ], "hobbies": [
+            new Field("hobbies", "Hobbies", FieldType.Text, "What are the center of interests of your character")
         ], "free-space": [
             new Field("free", "", FieldType.Text, "Anything else to add? How he keep telling to everyone to not feed bread to ducks? Or just some personal notes you don't want to forget?"),
         ]};
