@@ -1,7 +1,7 @@
 import NamedData from "./data/NamedData";
 import { preloadFilter, updateCurrentName, updateFilter } from "./filter";
 import ATemplate from "./template/ATemplate";
-import { FieldType } from "./template/FieldType";
+import { FieldType } from "./template/display/FieldType";
 
 // All data
 let templateData: { [id: string]: Array<NamedData> } = {};
@@ -126,11 +126,15 @@ function updateContent(data: ATemplate) {
                     let html = "<div>";
                     switch (field.type) {
                         case FieldType.String:
-                            html += `${label} <input type="text" id="${id}" value="${value}" placeholder="${field.watermark}"/>`;
+                            html += `<label>${label}</label> <input type="text" id="${id}" value="${value}" placeholder="${field.watermark}"/>`;
+                            break;
+                            
+                        case FieldType.Number:
+                            html += `<label>${label}</label> <input type="number" id="${id}" value="${value}" placeholder="${field.watermark}"/>`;
                             break;
 
                         case FieldType.Text:
-                            html += `${label} <textarea id="${id}" value="${value}" placeholder="${field.watermark}"></textarea>`;
+                            html += `<label>${label}</label> <textarea id="${id}" value="${value}" placeholder="${field.watermark}" rows="8"></textarea>`;
                             break;
 
                         default:

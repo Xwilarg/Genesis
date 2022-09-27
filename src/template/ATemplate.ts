@@ -1,4 +1,4 @@
-import Field from "./Field";
+import Field from "./display/Field";
 
 export default abstract class ATemplate
 {

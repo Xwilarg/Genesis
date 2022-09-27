@@ -1,6 +1,6 @@
 import ATemplate from "../ATemplate";
-import Field from "../Field";
-import { FieldType } from "../FieldType";
+import Field from "../display/Field";
+import { FieldType } from "../display/FieldType";
 
 /// Represent a whole tab on the main section
 export default class Character implements ATemplate

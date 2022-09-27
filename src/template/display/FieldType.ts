@@ -1,4 +1,5 @@
 export enum FieldType {
     String,
-    Text
+    Text,
+    Number
 }
