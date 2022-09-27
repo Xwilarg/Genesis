@@ -18,6 +18,8 @@ export default class Language implements ATemplate
             new Field("conjugaison", "Conjugaison", FieldType.Text, "How are verbs conjuged? What verb forms are available and what are they for? What pronouns? Does it differ when mentionning an inanimate object or when you speak with respect?"),
         ], "history": [
             new Field("origin", "Origin", FieldType.Text, "Where is the language coming from?")
+        ], "internal": [
+            new Field("validator", "Validator", FieldType.Text, "Associative array of an english letter and the local equivalent, will be used in a future update to validate if words looks valid")
         ], "free-space": [
             new Field("free", "", FieldType.Text, "Anything else to add? How [ɐ] and [ä] but people can't make the difference anymore? Or just some personal notes you don't want to forget?"),
         ]};

@@ -14,6 +14,7 @@ export default class Character implements ATemplate
             new Field("height", "Height", FieldType.Number, "cm"),
             new Field("weight", "Weight", FieldType.Number, "kg"),
             new Field("species", "Species", FieldType.String, "Is he a human? an elf? a spirit?"),
+            new Field("language", "Language Spoken", FieldType.String),
             new Field("gender", "Gender", FieldType.String, "Is a male, a female or does identify as something else?"),
             new Field("sexuality", "Sexuality", FieldType.String, "Is he heterosexual, homosexual, Asexual...")
         ], "physical-appearance": [
