@@ -6,10 +6,10 @@ import { FieldType } from "./template/FieldType";
 // All data
 let templateData: { [id: string]: Array<NamedData> } = {};
 // Data currently being edited
-let current: NamedData | null = null;
+let current: Record<string, NamedData | null> = {};
 
-function setCurrent(data: NamedData | null) {
-    current = data;
+function setCurrent(id: string, data: NamedData | null) {
+    current[id] = data;
 }
 
 function getData(): { [id: string]: Array<NamedData> }
@@ -28,7 +28,7 @@ function updateDisplay(template: ATemplate) {
     const elemCount = Object.keys(templateData[template.getName()]).length;
     if (elemCount > 0)
     {
-        setCurrent(templateData[template.getName()][0]);
+        setCurrent(template.getName(), templateData[template.getName()][0]);
     }
     const buttons = readyFilter(template);
     updateContent(template);
@@ -58,8 +58,8 @@ function addNewAndClean(data: ATemplate) {
 // id: id of the parent element
 function newElem(data: ATemplate) {
     const id = data.getName();
-    setCurrent(new NamedData(getUniqueId(id), {}));
-    templateData[id].push(current!);
+    setCurrent(id, new NamedData(getUniqueId(id), {}));
+    templateData[id].push(current[id]!);
     const buttons = readyFilter(data);
     buttons[buttons.length - 1].classList.add("tab-current");
 }
@@ -71,7 +71,7 @@ function readyFilter(data: ATemplate): Array<HTMLButtonElement> {
     {
         addNewAndClean(data);
     }, (elemId: number) => {
-        setCurrent(templateData[id].find(x => x.id == elemId)!);
+        setCurrent(id, templateData[id].find(x => x.id == elemId)!);
         updateContent(data);
     });
     document.getElementById(`content-${id}`)!.hidden = false;
@@ -84,7 +84,7 @@ function readyFilter(data: ATemplate): Array<HTMLButtonElement> {
 function preload(data: ATemplate) {
     const id = data.getName();
     templateData[id] = [];
-    setCurrent(null);
+    setCurrent(id, null);
 
     // Preload filter component
     preloadFilter(`filter-${id}`, () =>
@@ -100,7 +100,7 @@ function updateContent(data: ATemplate) {
     // Display template content
     const mainTarget = document.getElementById(`content-${data.getName()}`)!;
 
-    if (current === null) {
+    if (current[data.getName()] === null) {
         mainTarget.innerHTML = "";
         document.getElementById("introduction")!.hidden = false;
     } else {
@@ -111,8 +111,8 @@ function updateContent(data: ATemplate) {
                 return `<h2 class="cap-word">${key}</h2><div class='flex-break'></div>` +
                     value.map(field => {
                     const id = `${data.getName()}-${field.id}`;
-                    const value = field.id in current!.data
-                        ? current!.data[field.id]
+                    const value = field.id in current[data.getName()]!.data
+                        ? current[data.getName()]!.data[field.id]
                         : "";
                     const label = field.name === "" ? "" : (field.name + ": ");
                     let html = "<div>";
@@ -146,12 +146,12 @@ function updateContent(data: ATemplate) {
             for (const field of value) {
                 const id = `${data.getName()}-${field.id}`;
                 document.getElementById(id)!.addEventListener('change', (e: any) => {
-                    current!.data[field.id] = e.target.value;
+                    current[data.getName()]!.data[field.id] = e.target.value;
                 });
 
                 if (targetChangeFields.includes(field.id)) {
                     document.getElementById(id)!.addEventListener('change', (e: any) => {
-                        updateCurrentName(current!, data);
+                        updateCurrentName(current[data.getName()]!, data);
                     });
                 }
             }
@@ -163,8 +163,8 @@ function updateContent(data: ATemplate) {
         var button = document.createElement("button");
         button.innerHTML = "Delete";
         button.addEventListener("click", (_: any) => {
-            templateData[data.getName()] = templateData[data.getName()].filter(x => x.id !== current!.id);
-            setCurrent(null);
+            templateData[data.getName()] = templateData[data.getName()].filter(x => x.id !== current[data.getName()]!.id);
+            setCurrent(data.getName(), null);
             updateDisplay(data);
         });
         div.append(button);
