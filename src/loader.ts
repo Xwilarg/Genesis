@@ -1,5 +1,5 @@
 import NamedData from "./data/NamedData";
-import { preloadFilter, updateFilter } from "./filter";
+import { preloadFilter, updateCurrentName, updateFilter } from "./filter";
 import ATemplate from "./template/ATemplate";
 import { FieldType } from "./template/FieldType";
 
@@ -7,6 +7,10 @@ import { FieldType } from "./template/FieldType";
 let templateData: { [id: string]: Array<NamedData> } = {};
 // Data currently being edited
 let current: NamedData | null = null;
+
+function setCurrent(data: NamedData | null) {
+    current = data;
+}
 
 function getData(): { [id: string]: Array<NamedData> }
 {
@@ -24,7 +28,7 @@ function updateDisplay(template: ATemplate) {
     const elemCount = Object.keys(templateData[template.getName()]).length;
     if (elemCount > 0)
     {
-        current = templateData[template.getName()][0];
+        setCurrent(templateData[template.getName()][0]);
     }
     const buttons = readyFilter(template);
     updateContent(template);
@@ -54,7 +58,7 @@ function addNewAndClean(data: ATemplate) {
 // id: id of the parent element
 function newElem(data: ATemplate) {
     const id = data.getName();
-    current = new NamedData(getUniqueId(id), {});
+    setCurrent(new NamedData(getUniqueId(id), {}));
     templateData[id].push(current!);
     const buttons = readyFilter(data);
     buttons[buttons.length - 1].classList.add("tab-current");
@@ -67,7 +71,7 @@ function readyFilter(data: ATemplate): Array<HTMLButtonElement> {
     {
         addNewAndClean(data);
     }, (elemId: number) => {
-        current = templateData[id].find(x => x.id == elemId)!;
+        setCurrent(templateData[id].find(x => x.id == elemId)!);
         updateContent(data);
     });
     document.getElementById(`content-${id}`)!.hidden = false;
@@ -80,7 +84,7 @@ function readyFilter(data: ATemplate): Array<HTMLButtonElement> {
 function preload(data: ATemplate) {
     const id = data.getName();
     templateData[id] = [];
-    current = null;
+    setCurrent(null);
 
     // Preload filter component
     preloadFilter(`filter-${id}`, () =>
@@ -126,6 +130,14 @@ function updateContent(data: ATemplate) {
             })
             .join("");
 
+        var targetChangeFields: Array<string> = [];
+        function filterRegister(data: string): string
+        {
+            targetChangeFields.push(data);
+            return "";
+        }
+        data.formatName(filterRegister);
+
         // Add change listeners to all fields
         for (const [_, value] of Object.entries(data.getContent())) {
             for (const field of value) {
@@ -133,6 +145,12 @@ function updateContent(data: ATemplate) {
                 document.getElementById(id)!.addEventListener('change', (e: any) => {
                     current!.data[field.id] = e.target.value;
                 });
+
+                if (targetChangeFields.includes(field.id)) {
+                    document.getElementById(id)!.addEventListener('change', (e: any) => {
+                        updateCurrentName(current!, data);
+                    });
+                }
             }
         }
 
@@ -143,7 +161,7 @@ function updateContent(data: ATemplate) {
         button.innerHTML = "Delete";
         button.addEventListener("click", (_: any) => {
             templateData[data.getName()] = templateData[data.getName()].filter(x => x.id !== current!.id);
-            current = null;
+            setCurrent(null);
             updateDisplay(data);
         });
         div.append(button);

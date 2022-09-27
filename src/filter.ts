@@ -6,6 +6,19 @@ function preloadFilter(id: string, onNew: () => void) {
     document.getElementById(`new-${id}`)!.addEventListener("click", onNew);
 }
 
+function getName(x: NamedData, template: ATemplate): string {
+    function format(name: string): string {
+        return name in x.data ? x.data[name] : "";
+    }
+
+    const name = template.formatName(format);
+    return name.trim() == "" ? "Unnamed" : name;
+}
+
+function updateCurrentName(x: NamedData, template: ATemplate) {
+    document.getElementById(`filter-${template.getName()}`)!.getElementsByClassName("tab-current")[0].innerHTML = getName(x, template);
+}
+
 // Update the display of the filter at the top
 function updateFilter(template: ATemplate, id: string, data: Array<NamedData>, onNew: () => void, onClick: (id: number) => void): Array<HTMLButtonElement> {
     let buttons = [];
@@ -13,14 +26,8 @@ function updateFilter(template: ATemplate, id: string, data: Array<NamedData>, o
     preloadFilter(id, onNew);
 
     for (let x of data) {
-        function format(name: string): string {
-            return name in x.data ? x.data[name] : "";
-        }
-
-        const name = template.formatName(format);
-
         var button = document.createElement("button");
-        button.innerHTML = name.trim() == "" ? "Unnamed" : name;
+        button.innerHTML = getName(x, template);
         button.classList.add("tab-elem");
         button.addEventListener("click", (e: any) => {
             // When we click a button, we update the tab currently selected and call onClick
@@ -37,4 +44,4 @@ function updateFilter(template: ATemplate, id: string, data: Array<NamedData>, o
     return buttons;
 }
 
-export { preloadFilter, updateFilter }
+export { preloadFilter, updateFilter, updateCurrentName }
