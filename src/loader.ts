@@ -33,7 +33,7 @@ function updateDisplay(template: ATemplate) {
     const buttons = readyFilter(template);
     updateContent(template);
     if (elemCount > 0) {
-        buttons[0].classList.add("tab-current");
+        buttons[0].classList.add("selected");
     }
 
 }
@@ -61,7 +61,7 @@ function newElem(data: ATemplate) {
     setCurrent(id, new NamedData(getUniqueId(id), {}));
     templateData[id].push(current[id]!);
     const buttons = readyFilter(data);
-    buttons[buttons.length - 1].classList.add("tab-current");
+    buttons[buttons.length - 1].classList.add("selected");
 }
 
 // Update the filters

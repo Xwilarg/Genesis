@@ -41,6 +41,10 @@ button:active {
     background-color: rgb(120, 120, 120);
 }
 
+button.selected {
+    background-color: rgb(120, 120, 120);
+}
+
 /* Settings are a small section in each tab that allow to manage it */
 
 .settings {

@@ -16,7 +16,7 @@ function getName(x: NamedData, template: ATemplate): string {
 }
 
 function updateCurrentName(x: NamedData, template: ATemplate) {
-    document.getElementById(`filter-${template.getName()}`)!.getElementsByClassName("tab-current")[0].innerHTML = getName(x, template);
+    document.getElementById(`filter-${template.getName()}`)!.getElementsByClassName("selected")[0].innerHTML = getName(x, template);
 }
 
 // Update the display of the filter at the top
@@ -28,13 +28,12 @@ function updateFilter(template: ATemplate, id: string, data: Array<NamedData>, o
     for (let x of data) {
         var button = document.createElement("button");
         button.innerHTML = getName(x, template);
-        button.classList.add("tab-elem");
         button.addEventListener("click", (e: any) => {
             // When we click a button, we update the tab currently selected and call onClick
-            for (const elem of document.getElementById(id)!.getElementsByClassName("tab-current")) {
-                elem.classList.remove("tab-current");
+            for (const elem of document.getElementById(id)!.getElementsByClassName("selected")) {
+                elem.classList.remove("selected");
             }
-            e.target.classList.add("tab-current");
+            e.target.classList.add("selected");
             onClick(x.id);
         });
         document.getElementById(id)!.append(button);
