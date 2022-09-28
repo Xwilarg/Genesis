@@ -29,3 +29,7 @@
 .tab-elem.tab-current {
     background-color: rgb(120, 120, 120);
 }
+
+.separator {
+    border-left: 1px solid black;
+}
