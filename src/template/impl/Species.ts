@@ -23,4 +23,8 @@ export default class Species implements ATemplate
     formatName(format: (name: string) => string): string {
         return format("name");
     }
+
+    getDescription(): string {
+        return "";
+    }
 }

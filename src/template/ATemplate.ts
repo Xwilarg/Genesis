@@ -7,4 +7,6 @@ export default abstract class ATemplate
     abstract getName(): string;
 
     abstract formatName(format: (name: string) => string): string;
+
+    abstract getDescription(): string;
 }

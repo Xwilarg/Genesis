@@ -109,7 +109,7 @@ function updateContent(data: ATemplate) {
     const mainTarget = document.getElementById(`content-${data.getName()}`)!;
 
     if (current[data.getName()] === null) {
-        mainTarget.innerHTML = "";
+        mainTarget.innerHTML = data.getDescription();
     } else {
         mainTarget.innerHTML =
             Object.entries(data.getContent())

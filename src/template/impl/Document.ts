@@ -20,4 +20,8 @@ export default class Document implements ATemplate
     formatName(format: (name: string) => string): string {
         return format("title");
     }
+
+    getDescription(): string {
+        return "Do you somehow need a big area to write about a specific topic? You can do it here!";
+    }
 }

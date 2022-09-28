@@ -50,4 +50,8 @@ export default class Character implements ATemplate
     formatName(format: (name: string) => string): string {
         return format("first-name") + " " + format("last-name");
     }
+
+    getDescription(): string {
+        return "";
+    }
 }
