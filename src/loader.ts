@@ -134,7 +134,7 @@ function updateContent(data: ATemplate) {
                             break;
 
                         case FieldType.Text:
-                            html += `<label>${label}</label> <textarea id="${id}" value="${value}" placeholder="${field.watermark}" rows="8"></textarea>`;
+                            html += `<label>${label}</label> <textarea id="${id}" placeholder="${field.watermark}" rows="8">${value}</textarea>`;
                             break;
 
                         default:
