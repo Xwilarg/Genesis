@@ -3,8 +3,9 @@ import Character from "./template/impl/Character";
 import Country from "./template/impl/Country";
 import Language from "./template/impl/Language";
 import Species from "./template/impl/Species";
+import Document from "./template/impl/Document";
 
-const modules = [ new Character(), new Country(), new Species(), new Language() ];
+const modules = [ new Character(), new Country(), new Species(), new Language(), new Document() ];
 
 function save() {
     const filename = "data.json";

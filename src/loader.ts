@@ -135,6 +135,10 @@ function updateContent(data: ATemplate) {
                             html += `<label>${label}</label> <textarea id="${id}" placeholder="${field.watermark}" rows="8">${value}</textarea>`;
                             break;
 
+                        case FieldType.Document:
+                            html += `<label>${label}</label> <textarea id="${id}" class="document" placeholder="${field.watermark}" rows="50">${value}</textarea>`;
+                            break;
+
                         default:
                             throw `Unhandled field type ${field.type}`
                     }
