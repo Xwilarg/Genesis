@@ -184,9 +184,12 @@ function updateContent(data: ATemplate) {
         var button = document.createElement("button");
         button.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
         button.addEventListener("click", (_: any) => {
-            templateData[data.getName()] = templateData[data.getName()].filter(x => x.id !== current[data.getName()]!.id);
-            setCurrent(data.getName(), null);
-            updateDisplay(data);
+            if (confirm("Are you sure? This action cannot be undone"))
+            {
+                templateData[data.getName()] = templateData[data.getName()].filter(x => x.id !== current[data.getName()]!.id);
+                setCurrent(data.getName(), null);
+                updateDisplay(data);
+            }
         });
         div.append(button);
         mainTarget.append(div);
