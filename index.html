@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="css/index.css"/>
         <link rel="stylesheet" href="css/tabs.css"/>
         <link rel="stylesheet" href="css/components.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
         <!-- JS -->
         <script src="js/saveload.js"></script> <!-- Save and load management -->
@@ -28,18 +29,21 @@
 
         <!-- TABS -->
         <div class="tab-menu" id="main-menu">
+            <button class="tab-elem tab-current" id="tab-home"><i class="fa-solid fa-house"></i></button>
         </div>
         <div class="tab-content" id="main-content">
-            <div id="introduction">
+            <span id="content-tab-home">
                 <p>
                     Welcome in Genesis, a tool to help you create a world and keep track of what is inside<br/>
-                    To start you are click on the button above ^<br/>
-                    <br/>
+                    <h2>Getting Start</h2>
+                    Click on one of the tab above to start<br/>
                     It is also advised that you save your work often (you can use Ctrl + S), this will download the data in your computer in form of a JSON<br/>
                     <br/>
+                    Already have a project? You can import it using the top-right Upload button
+                    <h2>External links</h2>
                     Source code available on <a href="https://github.com/Xwilarg/Genesis" target="_blank">GitHub</a>
                 </p>
-            </div>
+            </span>
         </div>
 
         <!-- IMPORT -->

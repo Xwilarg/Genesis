@@ -12,12 +12,14 @@
 }
 
 html {
-    font-family: 'Open Sans', sans-serif;
+    font-family: Verdana;
     background-color: #333;
 }
 
 .tab-menu {
     margin-top: 7em; /* Add space because of header */
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 #right {

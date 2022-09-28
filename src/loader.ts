@@ -110,9 +110,7 @@ function updateContent(data: ATemplate) {
 
     if (current[data.getName()] === null) {
         mainTarget.innerHTML = "";
-        document.getElementById("introduction")!.hidden = false;
     } else {
-        document.getElementById("introduction")!.hidden = true;
         mainTarget.innerHTML =
             Object.entries(data.getContent())
             .map(([key, value]) => {
@@ -184,7 +182,7 @@ function updateContent(data: ATemplate) {
         var div = document.createElement("div");
         div.classList.add("settings");
         var button = document.createElement("button");
-        button.innerHTML = "Delete";
+        button.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
         button.addEventListener("click", (_: any) => {
             templateData[data.getName()] = templateData[data.getName()].filter(x => x.id !== current[data.getName()]!.id);
             setCurrent(data.getName(), null);
