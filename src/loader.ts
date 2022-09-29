@@ -1,5 +1,6 @@
 import NamedData from "./data/NamedData";
 import { preloadFilter, updateCurrentName, updateFilter } from "./filter";
+import { getSetting, setSetting } from "./settings/SettingsManager";
 import ATemplate from "./template/ATemplate";
 import { FieldType } from "./template/display/FieldType";
 
@@ -113,15 +114,24 @@ function updateContent(data: ATemplate) {
     } else {
         mainTarget.innerHTML =
             Object.entries(data.getContent())
-            .map(([key, value]) => {
-                return `<h2 class="cap-word">${key.replace("/-/g", "")}</h2><div class='flex-break'></div>` +
-                    value.map(field => {
-                    const id = `${data.getName()}-${field.id}`;
-                    const value = field.id in current[data.getName()]!.data
+            .map(([key, fields]) => {
+                let html = "";
+                for (let index = 0; index < fields.length; index++)
+                {
+                    const field = fields[index];
+
+                    const id = `${data.getName()}-${field.id}`; // ID of the field
+                    const value = field.id in current[data.getName()]!.data // Value to store inside the field
                         ? current[data.getName()]!.data[field.id]
                         : "";
+                    const isInline = field.isInline && (index + 1 === fields.length || fields[index + 1].isInline); // Can the field be inlined
+                    // If we are in minimize mode, we skip empty fields
+                    if (value === "" && getSetting("minimize", false) === true) {
+                        continue;
+                    }
+
                     const label = field.name === "" ? "" : (field.name + ": ");
-                    let html = "<div>";
+                    html += "<div>";
                     switch (field.type) {
                         case FieldType.String:
                             html += `<label>${label}</label> <input type="text" id="${id}" value="${value}" placeholder="${field.watermark}"/>`;
@@ -150,11 +160,11 @@ function updateContent(data: ATemplate) {
                         }
                         html += "</div>";
                     }
-                    if (!field.isInline) { // Force break if field isn't inline
+                    if (!isInline) { // Force break if field isn't inline
                         html += "<div class='flex-break'></div>";
                     }
-                    return html;
-                }).join("");
+                }
+                return html === "" ? "" : (`<h2 class="cap-word">${key.replace("/-/g", "")}</h2><div class='flex-break'></div>` + html);
             })
             .join("<hr/>");
 
@@ -170,14 +180,17 @@ function updateContent(data: ATemplate) {
         for (const [_, value] of Object.entries(data.getContent())) {
             for (const field of value) {
                 const id = `${data.getName()}-${field.id}`;
-                document.getElementById(id)!.addEventListener('change', (e: any) => {
-                    current[data.getName()]!.data[field.id] = e.target.value;
-                });
-
-                if (targetChangeFields.includes(field.id)) {
-                    document.getElementById(id)!.addEventListener('change', (e: any) => {
-                        updateCurrentName(current[data.getName()]!, data);
+                const target = document.getElementById(id);
+                if (target !== null) {
+                    target.addEventListener('change', (e: any) => {
+                        current[data.getName()]!.data[field.id] = e.target.value;
                     });
+    
+                    if (targetChangeFields.includes(field.id)) {
+                        target.addEventListener('change', (e: any) => {
+                            updateCurrentName(current[data.getName()]!, data);
+                        });
+                    }
                 }
             }
         }
@@ -185,9 +198,9 @@ function updateContent(data: ATemplate) {
         // Add "delete" button
         var div = document.createElement("div");
         div.classList.add("settings");
-        var button = document.createElement("button");
-        button.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-        button.addEventListener("click", (_: any) => {
+        var bDelete = document.createElement("button");
+        bDelete.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+        bDelete.addEventListener("click", (_: any) => {
             if (confirm("Are you sure? This action cannot be undone"))
             {
                 templateData[data.getName()] = templateData[data.getName()].filter(x => x.id !== current[data.getName()]!.id);
@@ -195,7 +208,16 @@ function updateContent(data: ATemplate) {
                 updateDisplay(data);
             }
         });
-        div.append(button);
+        div.append(bDelete);
+        var bHide = document.createElement("button");
+        bHide.innerHTML = `<i class="fa-solid ${getSetting("minimize", false) ? "fa-maximize" : "fa-minimize"}"></i>`;
+        bHide.addEventListener("click", (_: any) => {
+            const newValue = !getSetting("minimize", false);
+            setSetting("minimize", newValue);
+            bHide.innerHTML = `<i class="fa-solid ${newValue ? "fa-maximize" : "fa-minimize"}"></i>`;
+            updateContent(data);
+        });
+        div.append(bHide);
         mainTarget.append(div);
     }
 }
