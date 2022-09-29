@@ -244,7 +244,10 @@ function refreshContent(data: ATemplate) {
             data: finalData,
             colHeaders: headers.map(x => x.name),
             licenseKey: 'non-commercial-and-evaluation',
-            currentRowClassName: 'current-row'
+            currentRowClassName: 'current-row',
+            fixedColumnsStart: 1,
+            filters: true,
+            dropdownMenu: ['filter_by_condition', 'filter_action_bar']
         });
 
         table.addHook('afterChange', (e: Array<any>) => {
