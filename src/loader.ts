@@ -198,6 +198,16 @@ function updateContent(data: ATemplate) {
         // Add "delete" button
         var div = document.createElement("div");
         div.classList.add("settings");
+        var bHide = document.createElement("button");
+        bHide.innerHTML = `<i class="fa-solid ${getSetting("minimize", false) ? "fa-maximize" : "fa-minimize"}"></i>`;
+        bHide.addEventListener("click", (_: any) => {
+            const newValue = !getSetting("minimize", false);
+            setSetting("minimize", newValue);
+            bHide.innerHTML = `<i class="fa-solid ${newValue ? "fa-maximize" : "fa-minimize"}"></i>`;
+            updateContent(data);
+        });
+        div.append(bHide);
+        div.append(document.createElement("br"));
         var bDelete = document.createElement("button");
         bDelete.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
         bDelete.addEventListener("click", (_: any) => {
@@ -209,15 +219,6 @@ function updateContent(data: ATemplate) {
             }
         });
         div.append(bDelete);
-        var bHide = document.createElement("button");
-        bHide.innerHTML = `<i class="fa-solid ${getSetting("minimize", false) ? "fa-maximize" : "fa-minimize"}"></i>`;
-        bHide.addEventListener("click", (_: any) => {
-            const newValue = !getSetting("minimize", false);
-            setSetting("minimize", newValue);
-            bHide.innerHTML = `<i class="fa-solid ${newValue ? "fa-maximize" : "fa-minimize"}"></i>`;
-            updateContent(data);
-        });
-        div.append(bHide);
         mainTarget.append(div);
     }
 }
