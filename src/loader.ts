@@ -135,7 +135,8 @@ function refreshContent(data: ATemplate) {
                         if (value === "" && getSetting("minimize", false) === true) {
                             continue;
                         }
-    
+
+                        // Change how we display the element depending of its type
                         const label = field.name === "" ? "" : (field.name + ": ");
                         html += "<div>";
                         switch (field.type) {
@@ -158,6 +159,8 @@ function refreshContent(data: ATemplate) {
                             default:
                                 throw `Unhandled field type ${field.type}`
                         }
+
+                        // If there is any helper link, we add it
                         html += "</div>";
                         if (field.links.length > 0) {
                             html += "<div>";
@@ -204,7 +207,6 @@ function refreshContent(data: ATemplate) {
             // Add "delete" button
             var divMain = document.createElement("div");
             divMain.classList.add("settings");
-    
             var bDelete = document.createElement("button");
             bDelete.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
             bDelete.addEventListener("click", (_: any) => {
@@ -223,13 +225,17 @@ function refreshContent(data: ATemplate) {
 
         mainTarget.innerHTML = `<div id='table-${data.getName()}'></div>`;
 
+        // Get all headers
         let finalData = [];
         let headers: Array<Field> = [];
         for (let field of Object.values(data.getContent()).flat()) {
+            // Don't show field if we are in minimize mode and there is no data for this field
             if (getSetting("minimize", false) === false || templateData[data.getName()].some(x => field.id in x.data && x.data[field.id] !== "")) {
                 headers.push(field);
             }
         }
+
+        // Fill all data
         for (const elem of templateData[data.getName()]) {
             let currData: Array<string> = [];
             for (let field of headers) {
@@ -243,15 +249,16 @@ function refreshContent(data: ATemplate) {
 
         // @ts-ignore, because of course JS can never work properly
         const table = new Handsontable(document.getElementById(`table-${data.getName()}`)!, {
-            data: finalData,
-            colHeaders: headers.map(x => x.name),
-            licenseKey: 'non-commercial-and-evaluation',
-            currentRowClassName: 'current-row',
-            fixedColumnsStart: 1,
-            filters: true,
-            dropdownMenu: ['filter_by_condition', 'filter_action_bar']
+            data: finalData, // All data
+            colHeaders: headers.map(x => x.name), // Column header
+            licenseKey: 'non-commercial-and-evaluation', // No key needed, this is a free to use website
+            currentRowClassName: 'current-row', // Allow to color a row when we press it
+            fixedColumnsStart: 1, // We always display the first column
+            filters: true, // Allow filters
+            dropdownMenu: ['filter_by_condition', 'filter_action_bar'] // Define how filters act
         });
 
+        // Handle data editing
         table.addHook('afterChange', (e: Array<any>) => {
             var a = e[0];
             const elemTarget = templateData[data.getName()][a[0]];
