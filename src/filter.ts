@@ -25,7 +25,13 @@ function updateFilter(template: ATemplate, id: string, data: Array<NamedData>, o
 
     preloadFilter(id, onNew);
 
-    for (let x of data) {
+    for (let x of data.sort((a, b) => {
+        const aN = getName(a, template);
+        const bN = getName(b, template);
+        if (aN < bN) return -1;
+        if (aN > bN) return 1;
+        return 0;
+    })) {
         var button = document.createElement("button");
         button.innerHTML = getName(x, template);
         button.addEventListener("click", (e: any) => {
