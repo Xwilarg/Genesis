@@ -9,6 +9,7 @@
     font-size: xx-large;
     height: 2em;
     line-height: 2em;
+    z-index: 1;
 }
 
 html {
