@@ -218,6 +218,31 @@ function refreshContent(data: ATemplate) {
         }
     } else if (displayMode === 1) { // Grid display
         mainFilter.hidden = true;
+
+        mainTarget.innerHTML = `<div id='table-${data.getName()}'></div>`;
+
+        let finalData = [];
+        let headers = [];
+        for (let field of Object.values(data.getContent()).flat()) {
+            headers.push(field.name);
+        }
+        finalData.push(headers);
+        for (const elem of templateData[data.getName()]) {
+            let currData: Array<string> = [];
+            for (let field of Object.values(data.getContent()).flat()) {
+                const value = field.id in elem.data // Value to store inside the field
+                ? elem.data[field.id]
+                : "";
+                currData.push(value);
+            }
+            finalData.push(currData);
+        }
+
+        // @ts-ignore, because of course JS can never work properly
+        new Handsontable(document.getElementById(`table-${data.getName()}`)!, {
+            data: finalData,
+            licenseKey: 'non-commercial-and-evaluation'
+        });
     }
 }
 
