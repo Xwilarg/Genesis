@@ -88,3 +88,9 @@ a:not(.button):hover {
 .cap-word:first-letter {
     text-transform: capitalize;
 }
+
+/* Handsontable */
+
+.current-row {
+    background-color: lightgray !important;
+}

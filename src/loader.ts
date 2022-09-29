@@ -243,7 +243,8 @@ function refreshContent(data: ATemplate) {
         const table = new Handsontable(document.getElementById(`table-${data.getName()}`)!, {
             data: finalData,
             colHeaders: headers.map(x => x.name),
-            licenseKey: 'non-commercial-and-evaluation'
+            licenseKey: 'non-commercial-and-evaluation',
+            currentRowClassName: 'current-row'
         });
 
         table.addHook('afterChange', (e: Array<any>) => {
