@@ -42,6 +42,7 @@ function updateFilter(template: ATemplate, id: string, data: Array<NamedData>, o
             e.target.classList.add("selected");
             onClick(x.id);
         });
+        button.dataset.id = x.id.toString();
         document.getElementById(id)!.append(button);
         buttons.push(button);
     }

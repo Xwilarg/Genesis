@@ -68,10 +68,11 @@ function addNewAndClean(data: ATemplate) {
 // id: id of the parent element
 function newElem(data: ATemplate) {
     const id = data.getName();
-    setCurrent(id, new NamedData(getUniqueId(id), {}));
+    const namedData = new NamedData(getUniqueId(id), {});
+    setCurrent(id, namedData);
     templateData[id].push(current[id]!);
     const buttons = readyFilter(data);
-    buttons[buttons.length - 1].classList.add("selected");
+    buttons.find(x => x.dataset.id === namedData.id.toString())!.classList.add("selected");
 }
 
 // Update the filters
