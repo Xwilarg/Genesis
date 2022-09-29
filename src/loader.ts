@@ -2,6 +2,7 @@ import NamedData from "./data/NamedData";
 import { preloadFilter, updateCurrentName, updateFilter } from "./filter";
 import { getSetting } from "./settings/SettingsManager";
 import ATemplate from "./template/ATemplate";
+import Field from "./template/display/Field";
 import { FieldType } from "./template/display/FieldType";
 
 // All data
@@ -222,11 +223,10 @@ function refreshContent(data: ATemplate) {
         mainTarget.innerHTML = `<div id='table-${data.getName()}'></div>`;
 
         let finalData = [];
-        let headers = [];
+        let headers: Array<Field> = [];
         for (let field of Object.values(data.getContent()).flat()) {
-            headers.push(field.name);
+            headers.push(field);
         }
-        finalData.push(headers);
         for (const elem of templateData[data.getName()]) {
             let currData: Array<string> = [];
             for (let field of Object.values(data.getContent()).flat()) {
@@ -239,9 +239,18 @@ function refreshContent(data: ATemplate) {
         }
 
         // @ts-ignore, because of course JS can never work properly
-        new Handsontable(document.getElementById(`table-${data.getName()}`)!, {
+        const table = new Handsontable(document.getElementById(`table-${data.getName()}`)!, {
             data: finalData,
+            colHeaders: headers.map(x => x.name),
             licenseKey: 'non-commercial-and-evaluation'
+        });
+
+        table.addHook('afterChange', (e: Array<any>) => {
+            var a = e[0];
+            const elemTarget = templateData[data.getName()][a[0]];
+            const fieldTarget = headers[a[1]];
+            const newValue = a[3];
+            elemTarget.data[fieldTarget.id] = newValue;
         });
     }
 }
