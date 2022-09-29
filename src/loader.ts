@@ -226,11 +226,13 @@ function refreshContent(data: ATemplate) {
         let finalData = [];
         let headers: Array<Field> = [];
         for (let field of Object.values(data.getContent()).flat()) {
-            headers.push(field);
+            if (getSetting("minimize", false) === false || templateData[data.getName()].some(x => field.id in x.data && x.data[field.id] !== "")) {
+                headers.push(field);
+            }
         }
         for (const elem of templateData[data.getName()]) {
             let currData: Array<string> = [];
-            for (let field of Object.values(data.getContent()).flat()) {
+            for (let field of headers) {
                 const value = field.id in elem.data // Value to store inside the field
                 ? elem.data[field.id]
                 : "";
