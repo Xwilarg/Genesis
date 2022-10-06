@@ -164,8 +164,8 @@ function refreshContent(data: ATemplate) {
                         if (value === "" && getSetting("minimize", false) === true) {
                             continue;
                         }
-                        const label = field.name === "" ? "" : (field.name + ": ");
-                        html += `<div><label>${label}</label> <span id="${id}-editmode" hidden>`;
+                        const label = field.name === "" ? "" : `<label>${field.name}: </label>`;
+                        html += `<div>${label} <span id="${id}-editmode" hidden>`;
                         html += getFieldHtml(field, id, value);
 
                         // We display a non-editable field (called display mode) and buttons to switch between the 2
