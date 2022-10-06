@@ -8,7 +8,7 @@ export default class Character implements ATemplate {
         return {
             "introduction": [
                 new Field("first-name", "Name", FieldType.String, "First Name", true),
-                new Field("last-name", "", FieldType.String, "Last Name"),
+                new Field("last-name", "", FieldType.String, "Last Name", true),
                 new Field("aliases", "Aliases", FieldType.Text),
                 new Field("height", "Height", FieldType.Number, "cm"),
                 new Field("weight", "Weight", FieldType.Number, "kg"),
