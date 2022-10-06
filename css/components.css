@@ -17,6 +17,7 @@
 label {
     display: inline-block;
     width: 10em;
+    font-size: large;
 }
 
 textarea.document {
