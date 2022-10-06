@@ -128,7 +128,7 @@ function getFieldHtml(field: Field, id: string, value: string) {
 }
 
 function parseContent(content: string) {
-    const markdown = marked.parse(content);
+    const markdown = marked.parse(content.replace(/\n/g, '  \n'));
     if (markdown.split('<p>').length > 2) {
         return markdown;
     }
