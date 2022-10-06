@@ -27,3 +27,7 @@ textarea.document {
 hr { /* Since we are using flex, we enforce the line-break */
     width: 100%;
 }
+
+button.small {
+    padding: .5em;
+}
