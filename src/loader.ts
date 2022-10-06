@@ -106,6 +106,26 @@ function preload(data: ATemplate) {
     refreshContent(data);
 }
 
+function getFieldHtml(field: Field, id: string, value: string) {
+    // Change how we display the element depending of its type
+    switch (field.type) {
+        case FieldType.String:
+            return `<input type="text" id="${id}" value="${value}" placeholder="${field.watermark}"/>`;
+
+        case FieldType.Number:
+            return `<input type="number" id="${id}" value="${value}" placeholder="${field.watermark}"/>`;
+
+        case FieldType.Text:
+            return `<textarea id="${id}" placeholder="${field.watermark}" rows="8">${value}</textarea>`;
+
+        case FieldType.Document:
+            return `<textarea id="${id}" class="document" placeholder="${field.watermark}" rows="50">${value}</textarea>`;
+
+        default:
+            throw `Unhandled field type ${field.type}`
+    }
+}
+
 // Update the main content of the page
 function refreshContent(data: ATemplate) {
     // Display template content
@@ -135,36 +155,15 @@ function refreshContent(data: ATemplate) {
                         if (value === "" && getSetting("minimize", false) === true) {
                             continue;
                         }
-
-                        // Change how we display the element depending of its type
                         const label = field.name === "" ? "" : (field.name + ": ");
                         html += `<div><label>${label}</label> <span id="${id}-editmode" hidden>`;
-                        switch (field.type) {
-                            case FieldType.String:
-                                html += `<input type="text" id="${id}" value="${value}" placeholder="${field.watermark}"/>`;
-                                break;
-                                
-                            case FieldType.Number:
-                                html += `<input type="number" id="${id}" value="${value}" placeholder="${field.watermark}"/>`;
-                                break;
-    
-                            case FieldType.Text:
-                                html += `<textarea id="${id}" placeholder="${field.watermark}" rows="8">${value}</textarea>`;
-                                break;
-    
-                            case FieldType.Document:
-                                html += `<textarea id="${id}" class="document" placeholder="${field.watermark}" rows="50">${value}</textarea>`;
-                                break;
-    
-                            default:
-                                throw `Unhandled field type ${field.type}`
-                        }
+                        html += getFieldHtml(field, id, value);
 
                         // We display a non-editable field (called display mode) and buttons to switch between the 2
                         html +=
                             `<button class="small" id="${id}-enabledisplay"><i class="fa-solid fa-floppy-disk"></i></button></span>
                             <span id="${id}-displaymode">
-                                ${value} <button class="small" id="${id}-enableedit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <span id="${id}-displaymodevalue">${value}</span> <button class="small" id="${id}-enableedit"><i class="fa-solid fa-pen-to-square"></i></button>
                             </span></div>`;
                         if (field.links.length > 0) { // If there is any helper link, we add it
                             html += "<div>";
@@ -195,29 +194,22 @@ function refreshContent(data: ATemplate) {
                     const id = `${data.getName()}-${field.id}`;
                     const target = document.getElementById(id);
                     if (target !== null) {
-                        target.addEventListener('change', (e: any) => {
-                            current[data.getName()]!.data[field.id] = e.target.value;
-                        });
-        
-                        if (targetChangeFields.includes(field.id)) {
-                            target.addEventListener('change', (e: any) => {
-                                updateCurrentName(current[data.getName()]!, data);
-                            });
-                        }
 
                         document.getElementById(`${id}-enableedit`)!.addEventListener("click", () => {
                             document.getElementById(`${id}-editmode`)!.hidden = false;
                             document.getElementById(`${id}-displaymode`)!.hidden = true;
+                        });
+                        document.getElementById(`${id}-enabledisplay`)!.addEventListener("click", () => {
+                            document.getElementById(`${id}-editmode`)!.hidden = true;
+                            document.getElementById(`${id}-displaymode`)!.hidden = false;
 
                             const ttarget: any = target;
                             current[data.getName()]!.data[field.id] = ttarget.value;
                             if (targetChangeFields.includes(field.id)) {
                                 updateCurrentName(current[data.getName()]!, data);
                             }
-                        });
-                        document.getElementById(`${id}-enabledisplay`)!.addEventListener("click", () => {
-                            document.getElementById(`${id}-editmode`)!.hidden = true;
-                            document.getElementById(`${id}-displaymode`)!.hidden = false;
+
+                            document.getElementById(`${id}-displaymodevalue`)!.innerHTML = ttarget.value;
                         });
                     }
                 }
