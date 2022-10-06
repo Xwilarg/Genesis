@@ -128,11 +128,11 @@ function getFieldHtml(field: Field, id: string, value: string) {
 }
 
 function parseContent(content: string) {
-    const markdown = marked.parse(content.replace(/\n/g, '  \n'));
-    if (markdown.split('<p>').length > 2) {
+    const markdown = marked.parse(content.replace(/\n/g, '  \n')).trim();
+    if (!markdown.startsWith("<p>") || !markdown.endsWith("</p>") || markdown.split('<p>').length > 2) {
         return markdown;
     }
-    return markdown.trim().slice(3, -4);
+    return markdown.slice(3, -4);
 }
 
 // Update the main content of the page
