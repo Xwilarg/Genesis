@@ -4,6 +4,7 @@ import { getSetting } from "./settings/SettingsManager";
 import ATemplate from "./template/ATemplate";
 import Field from "./template/display/Field";
 import { FieldType } from "./template/display/FieldType";
+import { marked } from 'marked';
 
 // All data
 let templateData: { [id: string]: Array<NamedData> } = {};
@@ -126,6 +127,10 @@ function getFieldHtml(field: Field, id: string, value: string) {
     }
 }
 
+function parseContent(content: string) {
+    return marked.parse(content);
+}
+
 // Update the main content of the page
 function refreshContent(data: ATemplate) {
     // Display template content
@@ -163,7 +168,7 @@ function refreshContent(data: ATemplate) {
                         html +=
                             `<button class="small" id="${id}-enabledisplay"><i class="fa-solid fa-floppy-disk"></i></button></span>
                             <span id="${id}-displaymode">
-                                <span id="${id}-displaymodevalue">${value}</span> <button class="small" id="${id}-enableedit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <span id="${id}-displaymodevalue">${parseContent(value)}</span> <button class="small" id="${id}-enableedit"><i class="fa-solid fa-pen-to-square"></i></button>
                             </span></div>`;
                         if (field.links.length > 0) { // If there is any helper link, we add it
                             html += "<div>";
@@ -195,21 +200,21 @@ function refreshContent(data: ATemplate) {
                     const target = document.getElementById(id);
                     if (target !== null) {
 
-                        document.getElementById(`${id}-enableedit`)!.addEventListener("click", () => {
+                        document.getElementById(`${id}-enableedit`)!.addEventListener("click", () => { // We switch to edit mode
                             document.getElementById(`${id}-editmode`)!.hidden = false;
                             document.getElementById(`${id}-displaymode`)!.hidden = true;
                         });
-                        document.getElementById(`${id}-enabledisplay`)!.addEventListener("click", () => {
+                        document.getElementById(`${id}-enabledisplay`)!.addEventListener("click", () => { // We switch to display mode
                             document.getElementById(`${id}-editmode`)!.hidden = true;
                             document.getElementById(`${id}-displaymode`)!.hidden = false;
 
                             const ttarget: any = target;
-                            current[data.getName()]!.data[field.id] = ttarget.value;
+                            current[data.getName()]!.data[field.id] = ttarget.value; // Update save data
                             if (targetChangeFields.includes(field.id)) {
-                                updateCurrentName(current[data.getName()]!, data);
+                                updateCurrentName(current[data.getName()]!, data); // If the tab name depend of this field, we update the name
                             }
 
-                            document.getElementById(`${id}-displaymodevalue`)!.innerHTML = ttarget.value;
+                            document.getElementById(`${id}-displaymodevalue`)!.innerHTML = parseContent(ttarget.value); // Update the text on display mode
                         });
                     }
                 }
