@@ -3,21 +3,19 @@ import Field from "../display/Field";
 import { FieldType } from "../display/FieldType";
 
 /// Represent a whole tab on the main section
-export default class Species implements ATemplate {
+export default class City implements ATemplate {
     getContent(): Record<string, Field[]> {
         return {
             "general": [
-                new Field("name", "Name", FieldType.String),
-                new Field("lifespan", "Average lifespan", FieldType.Number, ""),
-                new Field("Height", "Average height", FieldType.Number, "cm")
+                new Field("name", "Name", FieldType.String)
             ], "free-space": [
-                new Field("free", "", FieldType.Document, "Anything else to add? How they don't like sand because it's rough and irritating? Or just some personal notes you don't want to forget?"),
+                new Field("free", "", FieldType.Document, "Bingo"),
             ]
         };
     }
 
     getName(): string {
-        return "species";
+        return "city";
     }
 
     formatName(format: (name: string) => string): string {

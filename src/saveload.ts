@@ -5,8 +5,12 @@ import Country from "./template/impl/Country";
 import Language from "./template/impl/Language";
 import Species from "./template/impl/Species";
 import Document from "./template/impl/Document";
+import City from "./template/impl/City";
+import Organization from "./template/impl/Organization";
+import Calendar from "./template/impl/Calendar";
+import Plane from "./template/impl/Plane";
 
-const modules = [ new Character(), new Country(), new Species(), new Language(), new Document() ];
+const modules = [new Character(), new Organization(), new Country(), new City(), new Species(), new Language(), new Calendar(), new Plane(), new Document()];
 
 function save() {
     const filename = "data.json";
@@ -25,7 +29,7 @@ function upload() {
     let file = (document.getElementById("uploadInternal") as HTMLInputElement).files![0]; // Get user file
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(val: any) {
+        reader.onload = function (val: any) {
             resetData();
             const json = JSON.parse(val.target.result);
             for (const mod of modules) {

@@ -3,14 +3,14 @@ import Field from "../display/Field";
 import { FieldType } from "../display/FieldType";
 
 /// Represent a whole tab on the main section
-export default class Document implements ATemplate
-{
-    getContent(): Record<string, Field[]>{
+export default class Document implements ATemplate {
+    getContent(): Record<string, Field[]> {
         return {
             "": [
-            new Field("title", "Title", FieldType.String),
-            new Field("Content", "Document", FieldType.Document, "")
-        ]};
+                new Field("title", "Title", FieldType.String),
+                new Field("Content", "Document", FieldType.Document, "")
+            ]
+        };
     }
 
     getName(): string {
